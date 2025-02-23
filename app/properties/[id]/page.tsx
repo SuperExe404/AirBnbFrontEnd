@@ -1,5 +1,6 @@
 import Image from "next/image";
 import ReservationSidebar from "@/app/components/properties/ReservationSidebar";
+import LandlordDetailPage from "@/app/landlords/[id]/page";
 
 const PropertyDetailPage = () => {
     return(
@@ -42,6 +43,7 @@ const PropertyDetailPage = () => {
                 </div>
 
                 <ReservationSidebar />
+                <LandlordDetailPage />
             </div>
         </main>
     )

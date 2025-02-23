@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 
-export default {
+const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,10 +9,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        airbnb: '#ff385c',
-        airbnbDark: '#d50027'
+        'airbnb': '#ff385c',
+        'airbnb-dark': '#d50027'
       }
     },
   },
   plugins: [],
-} satisfies Config;
+};
+export default config;
