@@ -6,7 +6,7 @@ import { useState } from "react";
 import useSignupModal from "../hooks/useSignupModal";
 import CustomButton from "../forms/CustomButton";
 import apiService from "@/app/services/apiServices";
-import { handleLogin } from "@/app/lib/actions";
+import { handleLogin } from "../lib/action.";
  
 
 const SignupModal = () => {
@@ -26,8 +26,8 @@ const SignupModal = () => {
              password2: password2
          }
  
-         const response = await apiService.post('/api/auth/register/', JSON.stringify(formData));
- 
+         const response = await apiService.postWithoutToken('/api/auth/register/', JSON.stringify(formData)); 
+
          if (response.access) {
              handleLogin(response.user.pk, response.access, response.refresh);
  
