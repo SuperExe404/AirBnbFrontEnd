@@ -1,54 +1,41 @@
 'use client';
-
-import { useEffect, useState } from "react";
-import PropertylistItem from "./PropertyListItem";
-import apiService from "@/app/services/apiServices";
-
-export type PropertyType = {
-    id: string;
-    title: string;
-    image_url: string;
-    price_per_night:number;
-}
-
-const Propertylist = () => {
-    const [properties, setProperties] = useState<PropertyType[]>([]);
-
-    const getProperties = async () => {
-        const url = 'http://localhost:8000/api/properties/properties/';
-
-        await fetch(url, {
-            method: 'GET',
-        })
-        .then(response => response.json())
-        .then((json) => {
-            console.log('json', json)
-
-            setProperties(json.data)
-        })
-        .catch((error) => {
-            console.log('error', error)
-        })
-    };
-
-    useEffect(() => {
-        apiService.get('hello')
-
-        getProperties();
-    }, []);
-
-    return (
-        <>
-            {properties.map((property) => {
-                return(
-                    <PropertylistItem 
-                        key={property.id}
-                        property={property}
-                    />
-                )
-            })}
-        </>
-    )
-}
-
-export default Propertylist;
+ 
+ import apiService from '@/app/services/apiServices';
+ import { useEffect, useState } from 'react';
+ 
+ import PRopertyListItem from "./PropertyListItem";
+ 
+ export type PropertyType = {
+     id: string;
+     title: string;
+     image_url: string;
+     price_per_night: number;
+ }
+ 
+ const PropertyList = ()=>{
+     const[properties,setProperties]=useState<PropertyType[]>([]);
+ 
+     const getProperties = async () =>{
+         const tmpProperties = await apiService.get('/api/properties/')
+ 
+         console.log(tmpProperties);  // Verifica la respuesta
+         setProperties(tmpProperties.data || []); 
+         setProperties(tmpProperties.data);
+     };
+     useEffect(()=>{
+         getProperties();
+     },[]);
+ 
+     return(
+         <>
+             {properties.map((property)=>{
+                 return(
+                     <PRopertyListItem
+                         key={property.id}
+                         property={property}
+                     />
+                 )
+             })}
+         </>
+     )
+ }
