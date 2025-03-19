@@ -36,21 +36,29 @@
                  <div className="w-[220px] absolute top-[60px] right-0 bg-white border rounded-xl shadow-md flex flex-col cursor-pointer">
                      { userId? (
                          <>
-                             <MenuLink
+                            <MenuLink
                                 label='My properties'
                                 onClick={()=> {
                                     setIsOpen(false);
                                     router.push('/myproperties');
                                  }}
-                             />
+                            />
+
+                            <MenuLink
+                                 label='My favorites'
+                                 onClick={()=> {
+                                         setIsOpen(false);
+                                         router.push('/myfavorites');
+                                 }}
+                            />
  
-                             <MenuLink
+                            <MenuLink
                                  label='My reservations'
                                  onClick={()=> {
                                     setIsOpen(false);
                                     router.push('/myreservations');
                                  }}
-                             />
+                            />
  
                              <LogoutButton/>
                          </>

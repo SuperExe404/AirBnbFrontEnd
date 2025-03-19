@@ -1,13 +1,16 @@
 import Image from "next/image";
 import { PropertyType } from "./PropertyList";
 import { useRouter } from "next/navigation";
+import FavoriteButton from "../FavoriteButton";
 
 interface PropertyProps {
     property: PropertyType
+    markFavorite?: (is_favorite: boolean) => void
 }
 
 const PropertylistItem: React.FC<PropertyProps> = ({
-    property
+    property,
+    markFavorite
 }) => {
     const router = useRouter();
     return (
@@ -22,6 +25,14 @@ const PropertylistItem: React.FC<PropertyProps> = ({
                     className="hover:scale-110 object-cover transition h-full w-full"
                     alt={property.title} 
                 />
+                
+                {markFavorite && (
+                     <FavoriteButton
+                         id={property.id}
+                         is_favorite={property.is_favorite}
+                         markFavorite={(is_favorite) => markFavorite(is_favorite)}
+                     />
+                 )}
             </div>
 
             <div className="mt-2">
