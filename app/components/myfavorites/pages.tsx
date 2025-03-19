@@ -1,5 +1,5 @@
-import PropertyList from "../components/properties/PropertyList";
- import { getUserId } from "../lib/actions";
+import { getUserId } from "../lib/action.";
+import PropertyList from "../properties/PropertyList";
  
  const MyFavoritesPage = async () => {
      const userId = await getUserId();
