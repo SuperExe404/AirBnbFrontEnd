@@ -1,47 +1,40 @@
-import Conversation from "../components/inbox/Conversation";
 import { getUserId } from "../components/lib/action.";
-import apiService from "../services/apiServices";
-import React, { useState, useEffect } from 'react';
-
-export type UserType = {
-    id: string;
-    name: string;
-    avatar_url: string;
+import React, {useState, useEffect } from 'react';
+import apiService from "@/app/services/apiServices";
+import ConversationDetail from "@/app/components/inbox/ConversationDetail";
+import { UserType } from "../page";
+import { getAccessToken } from "../components/lib/action.";
+ 
+export type MessageType = {
+     id: string;
+     name: string;
+     body: string;
+     conversationId: string;
+     sent_to: UserType;
+     created_by: UserType
 }
-
-export type ConversationType = {
-    id: string;
-    users: UserType[];
+ 
+const ConversationPage = async ({ params }: { params: {id: string }}) =>{
+     const userId = await getUserId();
+     const token = await getAccessToken();
+     
+     if (!userId || !token) {
+         return (
+             <main className="max-w-[1500px] max-auto px-6 py-12">
+                 <p>You need to be authenticated...</p>
+             </main>
+         )
+     }
+     
+     const conversation = await apiService.get(`/api/chat/${params.id}/`)
+     
+     return(
+         <main className="max-w-[1500px] mx-auto px-6">
+             <ConversationDetail
+                 token={token}
+                 userId={userId}
+                 conversation={conversation.conversation}
+             />
+         </main>
+     )
 }
-
-const InboxPage = async () => {
-    const userId = await getUserId();
-
-    if (!userId) {
-        return (
-            <main className="max-w-[1500px] max-auto px-6 py-12">
-                <p>You need to be authenticated...</p>
-            </main>
-        )
-    }
-
-    const conversations = await apiService.get('/api/chat/')
-
-    return (
-        <main className="max-w-[1500px] mx-auto px-6 pb-6 space-y-4">
-                <h1 className="text-2xl my-6">Inbox</h1>
-
-                {conversations.map((conversation: ConversationType) => {
-                 return (
-                     <Conversation 
-                         userId={userId}
-                         key={conversation.id}
-                         conversation={conversation}
-                     />
-                 )
-             })}
-        </main>
-    )
-}
-
-export default InboxPage;
